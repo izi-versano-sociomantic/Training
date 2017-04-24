@@ -6,14 +6,23 @@ class NewCard extends Component {
     {
         super( props );
 
-        this.state = {
-              word: '',
-              translation: '',
-              focused: {
-                word: false,
-                translation: false,
-              }
-        };
+        this._initialState =
+        {
+          word: '',
+          translation: '',
+          focused:
+          {
+           word: false,
+           translation: false
+          }
+        }
+
+        this.state = this._initialState;
+    }
+
+    _resetState()
+    {
+        this.setState( this._initialState );
     }
 
     render()
@@ -38,6 +47,7 @@ class NewCard extends Component {
                   value={this.state.word} onChange={this.handleWordChange}
                   onBlur={this.handleBlur( 'word' )}  className={focusInvalid( 'word' ) ? "error" : ""}/>
               </div>
+              <label className={focusInvalid( 'word' ) ? "error" : "hidden"}>word require characthers</label>
             </div>
             <div className="form-group">
               <label htmlFor="input-translation" className="col-xs-2 control-label">Translation</label>
@@ -48,6 +58,7 @@ class NewCard extends Component {
                 onBlur={this.handleBlur( 'translation' )}
                 className={focusInvalid( 'translation' ) ? "error" : ""}/>
               </div>
+              <label className={focusInvalid( 'translation' ) ? "error" : "hidden"}>translation require characthers</label>
             </div>
             <div className="form-group">
               <div className="col-xs-offset-3 col-xs-10">
@@ -74,7 +85,8 @@ class NewCard extends Component {
     }
 
     clearList = ( evt ) => {
-        evt.preventDefault();
+        this.props.ClearAllEvent();
+        this._resetState();
     }
 
     onSubmit = ( evt ) => {
@@ -82,6 +94,7 @@ class NewCard extends Component {
       const { word, translation } = this.state;
       var newItem = { title : word, translation : translation };
       this.props.addEvent( { newItem } );
+      this._resetState();
     }
 
 }

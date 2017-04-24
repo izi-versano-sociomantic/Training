@@ -3,10 +3,11 @@ import CardListItem from './card_list_item';
 
 
 const CardList= ( props ) => {
-    const cards = props.cards.map( ( card, index ) => {
+
+    const cards =  !props.cards.length ? 'Add Word and Translation' :
+    props.cards.map( ( card, index ) => {
         return (
             <CardListItem
-            onVideoSelect = {props.onVideoSelect}
             key={index}
             card={card} />
         );
