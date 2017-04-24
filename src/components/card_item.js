@@ -6,7 +6,10 @@ class NewCard extends Component {
     {
         super( props );
 
-        this.onSubmit = this.onSubmit.bind( this );
+        this.state = {
+              word: '',
+              translation: ''
+        };
     }
 
     render()
@@ -16,34 +19,43 @@ class NewCard extends Component {
             <div className="form-group">
               <label htmlFor="input-word" className="col-xs-2 control-label">Word</label>
               <div className="col-xs-8 col-xs-offset-1">
-                <input type="text"  ref="itemName"className="form-control"/>
+                <input type="text" value={this.state.word} placeholder="Enter word"
+                  value={this.state.word} onChange={this.handleWordChange} className="form-control"/>
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="input-translation" className="col-xs-2 control-label">Translation</label>
               <div className="col-xs-8 col-xs-offset-1">
-                <input type="text" ref="itemTranslation"   className="form-control"/>
+                <input type="text" placeholder="Enter translation"
+                value={this.state.translation} onChange={this.handleTranslationChange}  className="form-control"/>
               </div>
             </div>
             <div className="form-group">
               <div className="col-xs-offset-3 col-xs-10">
                  <button type="submit" className="btn btn-default">Add</button>
-                 <button type="button" className="btn btn-default" >Clear all</button>
+                 <button onClick={this.clearList} type="button" className="btn btn-default" >Clear all</button>
               </div>
             </div>
           </form> );
-
-
-
     }
 
-    onSubmit( event ){
-        event.preventDefault();
-        var input = ReactDOM.findDOMNode( this.refs.itemName );
-        var inputTranslation = ReactDOM.findDOMNode( this.refs.itemTranslation );
-        var newItem = { title : input.value, translation : inputTranslation.value };
+    handleWordChange = (evt) => {
+        this.setState({ word: evt.target.value });
+    }
+
+    handleTranslationChange = (evt) => {
+        this.setState({ translation: evt.target.value });
+    }
+
+    clearList = (e) => {
+        e.preventDefault();
+    }
+
+    onSubmit = (e) => {
+        const { word, translation } = this.state;
+        var newItem = { title : word, translation : translation };
         this.props.addEvent( { newItem } );
-        input.value = '';
+        e.preventDefault();
     }
 }
 

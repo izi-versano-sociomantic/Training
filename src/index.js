@@ -36,9 +36,8 @@ class App extends Component {
                </div>
              </h1>
             </div>
-            <CardList
-               cards={this.state.cards} />
-            <CardItem addEvent={this.addEvent}  />
+            <CardList cards={this.state.cards} />
+            <CardItem addEvent={this.addEvent} />
             </div>
         );
     }
